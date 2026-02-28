@@ -2,193 +2,150 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>SHΔDØW | TITAN X-ULTRA EDITION</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX 26 | المنصة الأرقى</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@300;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+Arabic:wght@300;700&display=swap');
         
-        :root { --neon: #00f3ff; --accent: #ff0055; --bg: #000000; }
-        body { background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; overflow: hidden; height: 100vh; margin: 0; }
+        :root { --accent: #00f3ff; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Noto Sans Arabic', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* تأثير الخلفية المتحركة */
-        .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #0a1120 0%, #000 100%); z-index: -1; }
-        .bg-glow::before { content: ''; position: absolute; width: 150%; height: 150%; background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); opacity: 0.2; }
+        /* خلفية سينمائية */
+        .cinema-bg { position: fixed; inset: 0; background: radial-gradient(circle at top right, #0a1525 0%, #000 100%); z-index: -1; }
 
-        /* هيكل التيتان العملاق */
-        .main-layout { display: grid; grid-template-columns: 100px 350px 1fr 300px; height: 100vh; gap: 0; }
+        /* هيدر فخم */
+        header { 
+            height: 80px; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; 
+            align-items: center; justify-content: space-between; padding: 0 40px; 
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+        }
+        .v-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 28px; letter-spacing: 4px; color: var(--accent); text-shadow: 0 0 15px var(--accent); }
 
-        /* القائمة الجانبية الأيقونية */
-        .side-nav { background: rgba(255,255,255,0.02); backdrop-filter: blur(40px); border-left: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; padding: 40px 0; }
-        .nav-icon { width: 55px; height: 55px; border-radius: 18px; display: flex; align-items: center; justify-content: center; transition: 0.4s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 25px; color: rgba(255,255,255,0.3); }
-        .nav-icon:hover { background: var(--neon); color: #000; box-shadow: 0 0 30px var(--neon); transform: scale(1.1) rotate(5deg); }
+        /* زر الرفع الحديث (بدون إعلانات) */
+        .prime-upload {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--accent); color: var(--accent);
+            padding: 10px 25px; border-radius: 12px; font-family: 'Orbitron'; font-size: 14px;
+            transition: 0.4s; cursor: pointer; display: flex; align-items: center; gap: 10px;
+        }
+        .prime-upload:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); transform: translateY(-2px); }
 
-        /* لوحة التحكم والرفع */
-        .control-panel { background: rgba(0,0,0,0.6); backdrop-filter: blur(30px); border-right: 1px solid rgba(255,255,255,0.05); padding: 35px; display: flex; flex-direction: column; }
-        .stat-card { background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent); border: 1px solid rgba(255,255,255,0.05); border-radius: 25px; padding: 25px; margin-bottom: 20px; transition: 0.3s; cursor: pointer; }
-        .stat-card:hover { border-color: var(--neon); background: rgba(0, 243, 255, 0.03); }
+        /* شبكة الفيديوهات الحديثة */
+        main { margin-top: 120px; padding: 0 40px 100px 40px; }
+        .vortex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
 
-        .upload-master { background: linear-gradient(45deg, var(--neon), #0077ff); color: #000; font-family: 'Orbitron'; font-weight: 900; padding: 22px; border-radius: 25px; text-align: center; cursor: pointer; transition: 0.5s; box-shadow: 0 15px 40px rgba(0, 243, 255, 0.3); margin-top: auto; }
-        .upload-master:hover { transform: translateY(-5px); box-shadow: 0 0 60px var(--neon); letter-spacing: 2px; }
+        /* كرت الفيديو الفاخر */
+        .v-card { 
+            background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        }
+        .v-card:hover { transform: scale(1.03); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .v-thumb { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        video { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s; }
+        .v-card:hover video { opacity: 1; transform: scale(1.05); }
 
-        /* صالة عرض الفيديوهات */
-        .gallery-area { padding: 40px; overflow-y: auto; scrollbar-width: none; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 35px; }
+        .v-meta { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .v-title { font-weight: 700; font-size: 16px; color: #eee; }
 
-        /* كرت فيديو التيتان X */
-        .titan-card { position: relative; aspect-ratio: 16/9; background: #050505; border-radius: 35px; border: 1px solid rgba(255,255,255,0.07); overflow: hidden; transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1); cursor: pointer; }
-        .titan-card:hover { transform: scale(1.06) translateY(-15px); border-color: var(--neon); box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,243,255,0.1); }
-        
-        video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: 0.6s; }
-        .titan-card:hover video { filter: brightness(1.1); transform: scale(1.1); }
+        /* علامة 2026 في الأسفل */
+        footer { 
+            text-align: center; padding: 40px; font-family: 'Orbitron'; 
+            font-size: 12px; letter-spacing: 5px; opacity: 0.3; color: var(--accent);
+        }
 
-        .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; opacity: 0; transition: 0.4s; }
-        .titan-card:hover .card-overlay { opacity: 1; }
-
-        /* شعار عمودي */
-        .vertical-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 22px; letter-spacing: 12px; writing-mode: vertical-rl; color: var(--neon); text-shadow: 0 0 25px var(--neon); opacity: 0.8; }
+        /* لودر الرفع */
+        #loading { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
+            z-index: 9999; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .pulse { width: 60px; height: 60px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(0.1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="cinema-bg"></div>
 
-    <div class="main-layout">
-        <aside class="side-nav">
-            <div class="vertical-logo mb-20">TITΔN_X</div>
-            <div class="nav-icon" onclick="openAd()"><i class="fas fa-layer-group"></i></div>
-            <div class="nav-icon" onclick="openAd()"><i class="fas fa-bolt"></i></div>
-            <div class="nav-icon" onclick="openAd()"><i class="fas fa-shield-cat"></i></div>
-            <div class="nav-icon" onclick="openAd()"><i class="fas fa-microchip"></i></div>
-        </aside>
+    <header>
+        <div class="v-logo">VORTEX</div>
+        <div class="prime-upload" id="up-trigger">
+            <i class="fas fa-plus-circle"></i>
+            <span>NEW DATA</span>
+        </div>
+    </header>
 
-        <section class="control-panel">
-            <div class="mb-10">
-                <p class="text-[10px] font-[Orbitron] text-cyan-500 mb-2">SYSTEM_NODE_01</p>
-                <h2 class="text-2xl font-black">DASHBOARD</h2>
-            </div>
-
-            <div class="stat-card" onclick="openAd()">
-                <p class="text-[10px] opacity-40 font-[Orbitron]">GLOBAL_REACH</p>
-                <h4 class="text-xl font-bold text-cyan-400">99.8% ACTIVE</h4>
-            </div>
-
-            <div class="stat-card" onclick="openAd()">
-                <p class="text-[10px] opacity-40 font-[Orbitron]">SERVER_LOAD</p>
-                <h4 class="text-xl font-bold">OPTIMIZED</h4>
-            </div>
-
-            <div class="upload-master" id="titan-upload">
-                <i class="fas fa-arrow-up-from-bracket mr-2"></i> UPLOAD_TITAN
-            </div>
-        </section>
-
-        <main class="gallery-area">
-            <header class="flex justify-between items-end mb-12">
-                <div>
-                    <h1 class="text-5xl font-black tracking-tighter italic">TITAN <span class="text-cyan-400">ARCHIVE</span></h1>
-                    <p class="text-xs opacity-30 mt-2 font-[Orbitron]">REALTIME_STORAGE_v4.0_ENCRYPTED</p>
-                </div>
-                <div class="bg-white/5 px-6 py-3 rounded-2xl border border-white/5 text-[10px] font-bold" id="user-display">---</div>
-            </header>
-
-            <div class="video-grid" id="main-titan-grid">
-                <div class="col-span-full py-40 text-center">
-                    <i class="fas fa-spinner fa-spin text-5xl text-cyan-500 opacity-20"></i>
-                </div>
-            </div>
-        </main>
-
-        <section class="control-panel border-r-0 border-l border-white/5">
-            <h3 class="text-[10px] font-[Orbitron] opacity-40 mb-8 tracking-widest">LIVE_METRICS</h3>
-            <div class="space-y-6">
-                <div class="p-6 bg-white/5 rounded-3xl border border-white/5">
-                    <p class="text-[10px] opacity-50 mb-2">DATABASE</p>
-                    <p class="text-xs font-bold text-cyan-400">goodd-eb2fa</p>
-                </div>
-                <div class="p-6 bg-white/5 rounded-3xl border border-white/5">
-                    <p class="text-[10px] opacity-50 mb-2">UPLOADER</p>
-                    <p class="text-xs font-bold text-cyan-400">Titan_preset</p>
-                </div>
-            </div>
-        </section>
+    <div id="loading">
+        <div class="pulse"></div>
+        <p class="mt-6 font-bold tracking-widest text-cyan-400">UPLOADING TO VORTEX ARCHIVE...</p>
     </div>
 
-    <script>
-        const SHADOW_ID = localStorage.getItem('shadow_uid') || 'UX_' + Math.random().toString(36).substr(2, 4).toUpperCase();
-        localStorage.setItem('shadow_uid', SHADOW_ID);
-        document.getElementById('user-display').innerText = `USER_REF: ${SHADOW_ID}`;
+    <main>
+        <div class="vortex-grid" id="main-display">
+            </div>
+    </main>
 
+    <footer>
+        <p>SYSTEM_CORE_V.26 // ALL RIGHTS RESERVED © 2026</p>
+    </footer>
+
+    <script>
+        // إعداداتك المعتمدة
         const firebaseConfig = { databaseURL: "https://goodd-eb2fa-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // نظام الإعلانات المزدوج المطور (الروابط الخاصة بك)
         const AD_LINKS = [
             "https://www.effectivegatecpm.com/k60w64w4gk?key=564f3d8cc4ac85949f218179b742495e",
             "https://www.effectivegatecpm.com/bxwxuk2f39?key=566216691dc8b76a740840e94f68f44c"
         ];
-        let adToggle = 0;
-        function openAd() {
-            window.open(AD_LINKS[adToggle], '_blank');
-            adToggle = (adToggle + 1) % AD_LINKS.length;
-        }
+        let adIdx = 0;
+        function openAd() { window.open(AD_LINKS[adIdx], '_blank'); adIdx = (adIdx + 1) % AD_LINKS.length; }
 
-        // إعدادات الرفع الخاصة بك
-        const CLOUD_NAME = "dssk5tabb", UPLOAD_PRESET = "Titan_preset";
-        const myWidget = cloudinary.createUploadWidget({ cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET }, (err, res) => {
+        // نظام الرفع السلس (بدون إعلانات)
+        const myWidget = cloudinary.createUploadWidget({ 
+            cloudName: "dssk5tabb", 
+            uploadPreset: "Titan_preset" 
+        }, (err, res) => {
+            if (res.event === "start") document.getElementById('loading').style.display = 'flex';
             if (!err && res.event === "success") {
-                db.ref('titan_x_vault/').push({ 
+                db.ref('vortex_26/').push({ 
                     url: res.info.secure_url, 
-                    user: SHADOW_ID, 
-                    likes: 0, 
                     time: Date.now() 
                 });
-                openAd();
+                document.getElementById('loading').style.display = 'none';
             }
         });
-        document.getElementById("titan-upload").onclick = () => { openAd(); myWidget.open(); };
 
-        // جلب الفيديوهات للشبكة العملاقة
-        db.ref('titan_x_vault').on('value', (snapshot) => {
-            const grid = document.getElementById('main-titan-grid');
+        document.getElementById("up-trigger").onclick = () => { myWidget.open(); };
+
+        // جلب البيانات بتنسيق فخم
+        db.ref('vortex_26').on('value', (snapshot) => {
+            const grid = document.getElementById('main-display');
             const data = snapshot.val();
-            if(!data) {
-                grid.innerHTML = '<div class="col-span-full py-40 text-center opacity-20">لا يوجد بيانات.. ابدأ ببناء أرشيف تيتان الخاص بك.</div>';
-                return;
-            }
+            if(!data) return;
             grid.innerHTML = '';
             Object.keys(data).reverse().forEach(id => {
-                const vid = data[id];
+                const v = data[id];
                 const card = document.createElement('div');
-                card.className = 'titan-card';
-                card.onclick = openAd;
+                card.className = 'v-card';
+                card.onclick = openAd; // الإعلان عند الضغط للمشاهدة
                 card.innerHTML = `
-                    <video loop muted onmouseover="this.play()" onmouseout="this.pause(); this.currentTime=0" src="${vid.url}"></video>
-                    <div class="card-overlay">
-                        <div class="flex justify-between items-center w-full">
-                            <div>
-                                <p class="text-[9px] font-[Orbitron] text-cyan-400">DATA_SOURCE</p>
-                                <p class="font-black text-lg">@${vid.user}</p>
-                            </div>
-                            <div class="flex flex-col items-center gap-1" onclick="event.stopPropagation(); toggleLike('${id}')">
-                                <i class="fas fa-heart text-2xl text-red-600"></i>
-                                <span class="text-xs font-[Orbitron]">${vid.likes || 0}</span>
-                            </div>
-                        </div>
+                    <div class="v-thumb">
+                        <video src="${v.url}" muted onmouseover="this.play()" onmouseout="this.pause()"></video>
+                    </div>
+                    <div class="v-meta">
+                        <span class="v-title italic opacity-80">ENCRYPTED_STREAM</span>
+                        <i class="fas fa-play-circle text-cyan-400"></i>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         });
-
-        function toggleLike(id) {
-            openAd();
-            db.ref(`titan_x_vault/${id}`).transaction(p => { if(p) p.likes = (p.likes || 0) + 1; return p; });
-        }
     </script>
 </body>
 </html>
